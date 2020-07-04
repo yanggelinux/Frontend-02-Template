@@ -1,6 +1,6 @@
 1、html技术知识
 2、css技术知识
-3、javascript技术姿势
+3、javascript技术知识
 4、常用前端框架讲解
 5、项目实战
 6、最佳实践
