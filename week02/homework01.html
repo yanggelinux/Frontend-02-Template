@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>编写带括号的四则运算产生式</title>
+  </head>
+  <body>
+    <div>
+      <pre>
+        <Expression> ::= 
+          <AdditiveExpression><EOF>
+      
+      <AdditiveExpression> ::= 
+          <MultiplicativeExpression>
+          |<AdditiveExpression>"+"><MultiplicativeExpression>
+          |<AdditiveExpression>"-"<MultiplicativeExpression>
+      
+      
+      <MultiplicativeExpression> ::= 
+          <Number>
+          |<MultiplicativeExpression>"*"<Number>
+          |<MultiplicativeExpression>"/"<Number>    
+      
+      <ParenthesisExpression> ::= 
+       <AdditiveExpression> 
+       | "(" <ParenthesisExpression> ")" 
+       | <ParenthesisExpression> "*"<ParenthesisExpression> 
+       | <ParenthesisExpression> "/" <ParenthesisExpression> 
+       | <ParenthesisExpression> "+" <ParenthesisExpression> 
+       | <ParenthesisExpression> "-" <ParenthesisExpression>  
+      </pre>
+    </div>
+  </body>
+</html>
