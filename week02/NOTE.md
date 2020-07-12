@@ -39,12 +39,12 @@ BNF范式（巴科斯范式）
 
 四则运算
 . 1 + 2 * 3  
-终结符：
-. Number
-. + -* /
-非终结符
-. `<MultiplicativeExpression>`
-. `<AdditiveExpression>`
+终结符：  
+. Number  
+. + -* /    
+非终结符  
+. `<MultiplicativeExpression>`  
+. `<AdditiveExpression>`  
 
 BNF表达式为：
 
