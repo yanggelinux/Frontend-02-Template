@@ -158,23 +158,23 @@ Object 是 JavaScript 中最复杂的类型，也是 JavaScript 的核心机制�
 
 ### 1、对象的分类
 
-##### 宿主对象（host Objects）：
+##### 宿主对象（host Objects）
 
 由 JS 宿主环境提供的对象，它们的行为完全由宿主环境决定。
 
-##### 内置对象（Built-in Objects）：
+##### 内置对象（Built-in Objects）
 
 由 JS 语言提供的对象。
 
-###### .固有对象（Intrinsic Objects ）：
+###### .固有对象（Intrinsic Objects ）
 
 由标准规定，随着 JS 运行时自动创建的对象实例。
 
-###### .原生对象（Native Objects）：
+###### .原生对象（Native Objects）
 
 可以由用户通过Array、RegExp等内置构造器或者特殊语法创建的对象。
 
-###### .普通对象（Ordinary Objects）：
+###### .普通对象（Ordinary Objects）
 
 由{}语法、Object构造器或者class关键字定义类创建的对象，它能够被原型继承
 
@@ -205,4 +205,4 @@ JavaScript 宿主对象千奇百怪，但是前端最熟悉的无疑是浏览器
 4. Arguments：arguments的非负整数型下标属性跟对应的变量联动。
 5. 模块的namespace对象：特殊的地方非常多，跟一般对象完全不一样，尽量只用于import吧。
 6. 类型数组和数组缓冲区：跟内存块相关联，下标运算比较特殊。
-7. bind后的function：跟原来的函数相关联。 
+7. bind后的function：跟原来的函数相关联。  
