@@ -148,7 +148,7 @@ AssignmentExpression 赋值表达式也有多种形态，最基本的当然是�
 
 1. ()
 2. ./[] 左
-3.. new MemberExpression Arguments
+3. new MemberExpression Arguments
 4. new MemberExpression 右
 5. () 函数调用 左
 6. ++/--
