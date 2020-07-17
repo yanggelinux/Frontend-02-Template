@@ -1,6 +1,6 @@
 # 第三周学习笔记  
 
-### 一、js表达式  
+### 一、js表达式
 
 #### 1、运算符和表达式
 
@@ -120,6 +120,7 @@ AssignmentExpression 赋值表达式也有多种形态，最基本的当然是�
 `!==`
 
 虽然标准中写的==十分复杂，但是归根结底，类型不同的变量比较时==运算只有三条规则：
+
 1. undefined 与 null 相等；
 2. 字符串和 bool 都转为数字再比较；
 3. 对象转换成 primitive 类型再比较。
@@ -127,6 +128,7 @@ AssignmentExpression 赋值表达式也有多种形态，最基本的当然是�
 ###### 16) 位运算表达式
 
 位运算表达式含有三种：
+
 1. 按位与表达式 BitwiseANDExpression
 2. 按位异或表达式 BitwiseANDExpression
 3. 按位或表达式 BitwiseORExpression。
