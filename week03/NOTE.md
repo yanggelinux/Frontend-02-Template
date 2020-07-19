@@ -195,5 +195,66 @@ Object.prototype.toString 是可以准确识别对象对应的基本类型的方
 
 ### 二、js语句  
 
+在 JavaScript 标准中，把语句分成了两种：声明和语句
+
+##### 普通语句
+
+###### 语句快
+
+###### 空语句
+
+###### 表达式语句
+
+###### if语句
+
+###### switch语句
+
+###### 循环语句
+
+for循环，for in 循环，for of 循环， for await of 循环，while 循环，do while 循环
+
+###### return语句
+
+###### break语句
+
+###### continue语句
+
+###### with语句
+
+###### throw语句
+
+###### try语句
+
+###### debugger语句
+
+##### 声明语句
+
+###### var语句
+
+###### let语句
+
+###### const语句
+
+let 和 const 声明虽然看上去是执行到了才会生效，但是实际上，它们还是会被预处理。不允许在变量声明之前提前访问，访问变量的值会报错。
+
+###### class语句
+
+class 最基本的用法只需要 class 关键字、名称和一对大括号。它的声明特征跟 const 和 let 类似，都是作用于块级作用域，预处理阶段则会屏蔽外部变量。
+
+###### 函数声明
+
+普通函数声明，async函数声明，generator函数声明，async generator函数声明
+
+##### Completion Record
+
+Completion Record 表示一个语句执行完之后的结果，它有三个字段：
+
+1. `[[type]]` 表示完成的类型，有 break continue return throw 和 normal 几种类型；
+2. `[[value]]` 表示语句的返回值，如果语句没有，则是 empty；
+3. `[[target]]` 表示语句的目标，通常是一个 JavaScript 标签。
+
+JavaScript 正是依靠语句的 Completion Record 类型，方才可以在语句的复杂嵌套结构中，实现各种控制。
+普通语句执行后，会得到 [[type]] 为 normal 的 Completion Record，JavaScript 引擎遇到这样的 Completion Record，会继续执行下一条语句。
+
 ### 三、js结构化
 
