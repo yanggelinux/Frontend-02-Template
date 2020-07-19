@@ -258,3 +258,17 @@ JavaScript 正是依靠语句的 Completion Record 类型，方才可以在语�
 
 ### 三、js结构化
 
+#### 1、宏任务和微任务
+
+javascript是一门单线程语言，所以一切javascript版的"多线程"都是用单线程模拟出来的。
+
+macro-task(宏任务)：包括整体代码module script，setTimeout，setInterval
+micro-task(微任务)：Promise，process.nextTick
+
+进入整体代码(宏任务)后，开始第一次循环。接着执行所有的微任务。然后再次从宏任务开始，找到其中一个任务队列执行完毕，再执行所有的微任务。
+
+#### 2、js函数调用
+
+##### 闭包
+
+单理解一下，闭包其实只是一个绑定了执行环境的函数，JavaScript 中的函数完全符合闭包的定义（js的函数就是闭包）。它的环境部分是函数词法环境部分组成，它的标识符列表是函数中用到的未声明变量，它的表达式部分就是函数体。
