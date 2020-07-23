@@ -30,8 +30,10 @@ class Request {
     return new Promise((resolve, reject) => {
       const parser = new ResponsePaeser()
       if (connection) {
+        console.log(this.toString())
         connection.write(this.toString())
       } else {
+        console.log(this.toString())
         connection = net.createConnection(
           {
             host: this.host,
@@ -58,10 +60,9 @@ class Request {
   }
   toString() {
     return `${this.method} ${this.path} HTTP/1.1\r
-    ${Object.keys(this.headers)
-      .map((key) => `${key}:${this.headers[key]}`)
-      .join("\r\n")}\r\r
-    ${this.bodyText}`
+${Object.keys(this.headers).map((key) => `${key}:${this.headers[key]}`).join("\r\n")}\r
+  \r
+  ${this.bodyText}`
   }
 }
 class ResponsePaeser {
