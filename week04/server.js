@@ -18,7 +18,7 @@ http
         body = body.join("")
         console.log("body", body)
         response.writeHead(200, { "Content-Tyoe": "text/html" })
-        response.end(`<html></html>`)
+        response.end(`<html lang="cn"></html>`)
       })
   })
   .listen(8088)
