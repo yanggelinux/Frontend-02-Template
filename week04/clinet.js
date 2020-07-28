@@ -208,6 +208,7 @@ void (async function() {
     },
   })
   let response = await request.send()
+  console.log(response.body)
   let dom = parser.parseHTML(response.body)
   console.log(dom)
 })()

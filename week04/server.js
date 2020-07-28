@@ -18,9 +18,10 @@ http
         body = body.join("")
         console.log("body", body)
         response.writeHead(200, { "Content-Tyoe": "text/html" })
-        response.end(`<html lang="cn"></html>`)
+        response.end(
+          `<html lang="cn"><head></head><body><div class="container"><p>hahahha</p></div></body></html>`
+        )
       })
   })
   .listen(8088)
-
 console.log("server started")

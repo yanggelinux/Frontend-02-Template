@@ -1,5 +1,6 @@
 let currentToken = null
 let currentAttribute = null
+let currentTextNode = null
 
 let stack = [{ type: "document", children: [] }]
 
@@ -27,8 +28,9 @@ function emit(token) {
       stack.push(element)
     }
     currentTextNode = null
-  } else if ((token.type === "endTag")) {
-    if ((top.tagName !== token.tagName)) {
+  } else if (token.type === "endTag") {
+    console.log(top.tagName, token.tagName)
+    if (top.tagName !== token.tagName) {
       throw new Error("Tag start end dosen't match")
     } else {
       stack.pop()
@@ -100,6 +102,7 @@ function tagName(c) {
     currentToken.tagName += c
     return tagName
   } else if (c === ">") {
+    //
     emit(currentToken)
     return data
   } else {
@@ -140,7 +143,7 @@ function afterAttributeName(c) {
       name: "",
       value: "",
     }
-    return attributeName
+    return attributeName(c)
   }
 }
 
@@ -226,7 +229,8 @@ function UnquotedAttributeValue(c) {
   } else if (c === EOF) {
   } else {
     currentAttribute.value += c
-    return UnquotedAttributeValue
+    // return UnquotedAttributeValue
+    return doubleQuotedAttributeValue
   }
 }
 
@@ -245,4 +249,6 @@ module.exports.parseHTML = function(html) {
     state = state(c)
   }
   state = state(EOF)
+  console.log(stack[0])
+  return stack[0]
 }
