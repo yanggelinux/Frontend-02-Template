@@ -19,7 +19,7 @@ http
         console.log("body", body)
         response.writeHead(200, { "Content-Tyoe": "text/html" })
         response.end(
-          `<html lang="cn"><head><style>.class{color:read}</style></head><body><div class="container"><p>hahahha</p></div></body></html>`
+          `<html lang="cn"><head><style>.container{color:read}</style></head><body><div class="container"><p>hahahha</p></div></body></html>`
         )
       })
   })
