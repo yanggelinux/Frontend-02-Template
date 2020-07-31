@@ -18,7 +18,7 @@ function match(element, selector) {
     }
   } else if (selector.charAt(0) === ".") {
     let attr = element.attributes.filter((attr) => attr.name === "class")[0]
-    if (attr && attr.value === selector.replace(",", "")) {
+    if (attr && attr.value === selector.replace(".", "")) {
       return true
     }
     // if (
@@ -49,7 +49,6 @@ function computeCSS(element) {
   }
   for (let rule of rules) {
     var selectorParts = rule.selectors[0].split(" ").reverse()
-
     if (!match(element, selectorParts[0])) {
       continue
     }
