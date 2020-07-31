@@ -208,6 +208,20 @@ void (async function() {
     },
   })
   let response = await request.send()
-  console.log(response.body)
   let dom = parser.parseHTML(response.body)
+  console.log(dom)
+  // console.log(JSON.stringify(dom, null, "  "))
+  var cache = []
+  const dealStringify = (key, value) => {
+    if (typeof value === "object" && value !== null) {
+      if (cache.indexOf(value) !== -1) {
+        // Circular reference found, discard key
+        return
+      }
+      // Store value in our collection
+      cache.push(value)
+    }
+    return value
+  }
+  console.log(JSON.stringify(dom, dealStringify, "    "))
 })()
