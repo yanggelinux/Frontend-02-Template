@@ -223,5 +223,5 @@ void (async function() {
     }
     return value
   }
-  // console.log(JSON.stringify(dom, dealStringify, "    "))
+  console.log(JSON.stringify(dom, dealStringify, "    "))
 })()

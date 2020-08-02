@@ -1,5 +1,5 @@
 const css = require("css")
-const layout = require("layout.js")
+const layout = require("./layout.js")
 let currentToken = null
 let currentAttribute = null
 let currentTextNode = null
@@ -10,7 +10,7 @@ let rules = []
 
 function specificity(selector) {
   let p = [0, 0, 0, 0]
-  console.log("selector", selector)
+  // console.log("selector", selector)
   let selectorParts = selector.split(" ")
   for (let part of selectorParts) {
     if (part.charAt(0) === "#") {
