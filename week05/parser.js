@@ -8,6 +8,24 @@ let stack = [{ type: "document", children: [] }]
 
 let rules = []
 
+function specificity2(selector) {
+  let p = [0, 0, 0, 0]
+  // console.log("selector", selector)
+  let selectorParts = selector.split(" ")
+  console.log("selector", selectorParts)
+  for (let part of selectorParts) {
+    if (part.charAt(0) === "#") {
+      p[1] += 1
+    } else if (part.charAt(0) === ".") {
+      p[2] += 1
+    } else {
+      p[3] += 1
+    }
+  }
+  // console.log("selectorParts", selectorParts, p)
+  return p
+}
+
 function specificity(selector) {
   let p = [0, 0, 0, 0]
   // console.log("selector", selector)
@@ -81,6 +99,8 @@ function computeCSS(element) {
   }
   for (let rule of rules) {
     // console.log("rule.selectors", rule.selectors)
+    //测试
+    specificity2(rule.selectors[0])
     let selectorParts = rule.selectors[0].split(" ").reverse()
     if (!match(element, selectorParts[0])) {
       continue
@@ -95,9 +115,10 @@ function computeCSS(element) {
     if (j >= selectorParts.length) {
       matched = true
     }
+
     if (matched) {
       //如果匹配到，加入computedStyle
-      // console.log("rule.selectors",rule.selectors)
+      // console.log("rule.selectors", rule.selectors)
       let sp = specificity(rule.selectors[0])
       let computedStyle = element.computedStyle
       for (let declaration of rule.declarations) {
