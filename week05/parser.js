@@ -42,21 +42,6 @@ function match(element, selector) {
   if (!selector || !element.attributes) {
     return false
   }
-  // //匹配简单选择器之外
-  // // let otherSelectorArr = selector.match(/(#|.)?[\w]+/g)
-  // console.log("selector:", selector)
-  // let otherSelectorArr = selector.match(/(#|.|>|,)?[\w]+/g)
-  // console.log("aaa", selector, otherSelectorArr)
-  // if (otherSelectorArr.length > 1) {
-  //   for (let i = 0; i < otherSelectorArr.length; i++) {
-  //     if (!match(element, otherSelectorArr[i].trim(">").trim(","))) {
-  //       console.log("false")
-  //       return false
-  //     }
-  //   }
-  //   console.log("true")
-  //   return true
-  // }
   //匹配简单选择器
   if (selector.charAt(0) === "#") {
     let attr = element.attributes.filter((attr) => attr.name === "id")[0]
