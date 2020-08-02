@@ -226,9 +226,8 @@ void (async function () {
     return value
   }
   // console.log(JSON.stringify(dom, dealStringify, "    "))
-  // let viewport = images(800, 600)
-  // console.log(viewport)
-  // render(viewport, dom)
-  // viewport.save("/tmp/viewport.jpg")
-  // console.log("success")
+  let viewport = images(800, 600)
+  render(viewport, dom)
+  viewport.save("/tmp/viewport.jpg")
+  console.log("success")
 })()

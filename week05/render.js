@@ -17,7 +17,7 @@ function render(viewport, element) {
       //   element.style
       // )
       img.fill(Number(RegExp.$1), Number(RegExp.$2), Number(RegExp.$3))
-      console.log(element.style.left,element.style.top)
+      // console.log(element.style.left,element.style.top)
       viewport.draw(img, element.style.left || 0, element.style.top || 0)
     }
   }
