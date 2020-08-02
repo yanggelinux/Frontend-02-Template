@@ -1,4 +1,5 @@
 const css = require("css")
+const layout = require("layout.js")
 let currentToken = null
 let currentAttribute = null
 let currentTextNode = null
@@ -9,6 +10,7 @@ let rules = []
 
 function specificity(selector) {
   let p = [0, 0, 0, 0]
+  console.log("selector", selector)
   let selectorParts = selector.split(" ")
   for (let part of selectorParts) {
     if (part.charAt(0) === "#") {
@@ -19,6 +21,8 @@ function specificity(selector) {
       p[3] += 1
     }
   }
+  // console.log("selectorParts", selectorParts, p)
+  return p
 }
 
 function compare(sp1, sp2) {
@@ -38,6 +42,22 @@ function match(element, selector) {
   if (!selector || !element.attributes) {
     return false
   }
+  // //匹配简单选择器之外
+  // // let otherSelectorArr = selector.match(/(#|.)?[\w]+/g)
+  // console.log("selector:", selector)
+  // let otherSelectorArr = selector.match(/(#|.|>|,)?[\w]+/g)
+  // console.log("aaa", selector, otherSelectorArr)
+  // if (otherSelectorArr.length > 1) {
+  //   for (let i = 0; i < otherSelectorArr.length; i++) {
+  //     if (!match(element, otherSelectorArr[i].trim(">").trim(","))) {
+  //       console.log("false")
+  //       return false
+  //     }
+  //   }
+  //   console.log("true")
+  //   return true
+  // }
+  //匹配简单选择器
   if (selector.charAt(0) === "#") {
     let attr = element.attributes.filter((attr) => attr.name === "id")[0]
     if (attr && attr.value === selector.replace("#", "")) {
@@ -75,7 +95,8 @@ function computeCSS(element) {
     element.computedStyle = {}
   }
   for (let rule of rules) {
-    var selectorParts = rule.selectors[0].split(" ").reverse()
+    // console.log("rule.selectors", rule.selectors)
+    let selectorParts = rule.selectors[0].split(" ").reverse()
     if (!match(element, selectorParts[0])) {
       continue
     }
@@ -91,6 +112,7 @@ function computeCSS(element) {
     }
     if (matched) {
       //如果匹配到，加入computedStyle
+      // console.log("rule.selectors",rule.selectors)
       let sp = specificity(rule.selectors[0])
       let computedStyle = element.computedStyle
       for (let declaration of rule.declarations) {
@@ -147,6 +169,7 @@ function emit(token) {
       if (top.tagName === "style") {
         addCSSRules(top.children[0].content)
       }
+      layout(top)
       stack.pop()
     }
     currentTextNode = null
@@ -357,7 +380,7 @@ function selfClosingStartTag(c) {
   }
 }
 
-module.exports.parseHTML = function(html) {
+module.exports.parseHTML = function (html) {
   let state = data
   for (let c of html) {
     state = state(c)

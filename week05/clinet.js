@@ -209,7 +209,7 @@ void (async function() {
   })
   let response = await request.send()
   let dom = parser.parseHTML(response.body)
-  console.log(dom)
+  // console.log(dom)
   // console.log(JSON.stringify(dom, null, "  "))
   var cache = []
   const dealStringify = (key, value) => {
@@ -223,5 +223,5 @@ void (async function() {
     }
     return value
   }
-  console.log(JSON.stringify(dom, dealStringify, "    "))
+  // console.log(JSON.stringify(dom, dealStringify, "    "))
 })()
