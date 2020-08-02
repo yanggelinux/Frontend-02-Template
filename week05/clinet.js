@@ -1,6 +1,8 @@
 //跟着老师节奏，完成课上代码。
 const net = require("net")
+const images = require("images")
 const parser = require("./parser.js")
+const render = require("./render.js")
 
 class Request {
   constructor(options) {
@@ -194,7 +196,7 @@ class TrunkedBodyParser {
   }
 }
 
-void (async function() {
+void (async function () {
   let request = new Request({
     method: "POST",
     host: "127.0.0.1",
@@ -223,5 +225,10 @@ void (async function() {
     }
     return value
   }
-  console.log(JSON.stringify(dom, dealStringify, "    "))
+  // console.log(JSON.stringify(dom, dealStringify, "    "))
+  let viewport = images(800, 600)
+  console.log(viewport)
+  render(viewport, dom)
+  viewport.save("/tmp/viewport.jpg")
+  console.log("success")
 })()
