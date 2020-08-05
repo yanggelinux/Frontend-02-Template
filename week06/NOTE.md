@@ -87,11 +87,30 @@ CSS 属性值可能是以下类型。
 &nbsp;&nbsp;逻辑伪类选择器
 &nbsp;&nbsp;其他伪类选择器
 
-##### 复合选择器（分组选择器）
+##### 分组选择器
 
-, 是将不同的选择器组合在一起的方法，它选择所有能被列表中的任意一个选择器选中的节点。
-语法：A, B
-示例：div, span 会同时匹配 `<span>` 元素和 `<div>` 元素。
+, 是将不同的选择器组合在一起的方法，它选择所有能被列表中的任意一个选择器选中的节点。  
+语法：A, B  
+示例：div, span 会同时匹配 `<span>` 元素和 `<div>` 元素。  
+
+##### 复合选择器
+
+<简单选择器><简单选择器><简单选择器>  
+*或则div必须写在最前面  
+语法 .A.B  
+示例1 p.clsB 匹配p标签的clsB  
+示例2 div.clsB 匹配div标签的clsB  
+`div.clsa {
+      height: 300px;
+      background-color: darkgoldenrod;
+    }`  
+`p.clsa {
+      background-color:darkorchid
+    }`  
+
+`<div class="clsa"></div>`  
+`<p class="clsa">hahahha</p>`  
+`<div class="clsb"></div>`  
 
 ##### 复杂选择器（组合器）
 
