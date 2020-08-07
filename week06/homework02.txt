@@ -1,0 +1,2 @@
+问：为什么 first-letter 可以设置 float 之类的，而 first-line 不行呢？
+答：再由于first-line伪类/伪元素是处理文字字符的，因此，只有部分的CSS声明可以使用，类似float，position:absolute这些破坏性属性显然是不支持的。

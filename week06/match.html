@@ -1,0 +1,319 @@
+<html>
+
+<head>
+  <title>简单选择器mathch selector函数</title>
+  <style>
+    #container .clsa>.classa>span {
+      color: darkorchid;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <div class="clsa">
+      <div class="clsa-1"></div>
+      <span id="ida" class="classa" name="yang">my select
+        <span> hhahha</span>
+      </span>
+      <label class="classa">my classb</label>
+    </div>
+    <div class="clsb">
+      <p name="yang" age=18>hahahahhaha</p>
+    </div>
+  </div>
+  <script>
+    var leftMatch = false
+    var rightMatch = false
+    var leftMatchCount = 0
+    var rightMatchCount = 0
+
+    function parseSimpleSelector(selector) {
+      //只解析简单选择器
+      if (/#((?:[\w\u00c0-\uFFFF\-]|\\.)+)/.test(selector)) {
+        //ID选择器
+        return 1
+      }
+      if (/^((?:[\w\u00c0-\uFFFF\-]|\\.)+)/.test(selector)) {
+        //Tag选择器
+        return 2
+      }
+      if (/\.((?:[\w\u00c0-\uFFFF\-]|\\.)+)/.test(selector)) {
+        //class选择器
+        return 3
+      }
+      if (/^\[[A-Za-z0-9_-\S]+\]$/.test(selector)) {
+        //属性选择器
+        return 4
+      }
+    }
+
+    function parseComplexSelector(selector) {
+      //解析复杂的选择器
+      const selectorParts01 = selector.split(" ")
+      const selectorParts02 = selector.split(">")
+      const selectorParts03 = selector.split("~")
+      const selectorParts04 = selector.split("+")
+      const selectorParts05 = selector.split("||")
+      if (selectorParts01.length > 1) {
+        //含有后代的复杂选择器
+        return 11
+      } else if (selectorParts02.length > 1) {
+        //含有子代的复杂选择器
+        return 12
+      } else if (selectorParts03.length > 1) {
+        //含有后继的复杂选择器
+        return 13
+      } else if (selectorParts04.length > 1) {
+        //含有直接后继的复杂选择器
+        return 14
+      } else if (selectorParts05.length > 1) {
+        //含有列表的复杂选择器
+        return 15
+      } else {
+        //简单选择器
+        return 10
+      }
+    }
+
+    function complexMatch(selector, element) {
+      tagName = element.tagName
+      console.log("begin", selector, element.tagName)
+      const selectorType = parseComplexSelector(selector)
+
+      if (selectorType === 10) {
+        //简单选择器匹配
+        return simpleMatch(selector, element)
+      } else {
+        //复杂选择器匹配
+        //获取当前元素的所有属性
+        let curSelector
+        const curEleAttrs = !element.attributes ? [] : element.attributes
+        if (curEleAttrs && curEleAttrs.length > 0) {
+          for (let i = 0; i < curEleAttrs.length; i++) {
+            //获取当前元素的选择器
+            if (curEleAttrs[i].name === "id") {
+              //id
+              curSelector = `#${curEleAttrs[i].value}`
+            } else if (curEleAttrs[i].name === "class") {
+              //class
+              curSelector = `.${curEleAttrs[i].value}`
+            } else {
+              //属性
+              curSelector = `[${curEleAttrs[i].name}=${curEleAttrs[i].value}]`
+            }
+            // console.log("curSelector", curSelector, selector)
+            //获取当前选择器 在整个选择器中的位置
+            if (selector.indexOf(curSelector) > 0) {
+              break
+            }
+          }
+
+        } else {
+          //当前选择器是tag
+          curSelector = tagName.toLowerCase()
+          console.log("curSelector", curSelector, "tagName", tagName.toLowerCase())
+        }
+        if (curSelector) {
+          // let leftMatch = false
+          // let rightMatch = false
+          const curFristIndex = selector.indexOf(curSelector)
+          const curLastIndex = selector.indexOf(curSelector) + curSelector.length - 1
+          const curLeftChar = selector.charAt(curFristIndex - 1)
+          const curRightChar = selector.charAt(curLastIndex + 1)
+          const curLeftSelector = selector.slice(0, curFristIndex - 1)
+          const curRightSelector = selector.slice(curLastIndex + 2)
+          if (!leftMatch && (curLeftChar === ">" || curLeftChar === " ")) {
+            //去匹配父元素
+            const parentNode = element.parentNode
+            console.log("parentNode", parentNode)
+            if (parentNode) {
+              leftMatch = complexMatch(curLeftSelector, parentNode)
+              leftMatchCount += 1
+            }
+
+            console.log("leftMatch", leftMatch)
+          }
+          if (!rightMatch && (curRightChar === ">" || curRightChar === " ")) {
+            //去匹配子元素
+            const childNodes = element.childNodes
+            console.log("childNodes", childNodes)
+            if (childNodes) {
+              for (let i = 0; i < childNodes.length; i++) {
+                const childNode = childNodes[i]
+                const tagName = childNode.tagName
+                if (tagName) {
+                  rightMatch = complexMatch(curRightSelector, childNode)
+                  rightMatchCount += 1
+                }
+                if (rightMatch) {
+                  break
+                }
+              }
+
+            }
+            console.log("rightMatch", rightMatch)
+          }
+          if (!leftMatch && (curLeftChar === "~") || curLeftChar === "+") {
+            //后继，去匹配当前节点的兄弟元素
+            const childNodes = element.parentNode.childNodes
+            if (childNodes) {
+              for (let i = 0; i < childNodes.length; i++) {
+                const childNode = childNodes[i]
+                const tagName = childNode.tagName
+                if (tagName) {
+                  leftMatch = complexMatch(curLeftSelector, childNode)
+                  leftMatchCount += 1
+                }
+                if (leftMatch) {
+                  break
+                }
+              }
+
+            }
+          }
+          if (!rightMatch && (curRightChar === "~" || curRightChar === "+")) {
+            //后继，去匹配当前节点兄弟元素
+            const childNodes = element.parentNode.childNodes
+            console.log("childNodes", childNodes)
+            if (childNodes) {
+              for (let i = 0; i < childNodes.length; i++) {
+                const childNode = childNodes[i]
+                const tagName = childNode.tagName
+                if (tagName) {
+                  rightMatch = complexMatch(curRightSelector, childNode)
+                  rightMatchCount += 1
+                }
+                if (rightMatch) {
+                  break
+                }
+              }
+
+            }
+            console.log("rightMatch", rightMatch)
+          }
+          if (leftMatchCount > 0 && rightMatchCount === 0) {
+            return leftMatch
+          } else if (leftMatchCount === 0 && rightMatchCount > 0) {
+            return rightMatchCount
+          } else {
+            return leftMatch && rightMatch
+          }
+
+        }
+      }
+    }
+
+    function simpleMatch(selector, element) {
+      //只支持简单选择器
+      const selectorType = parseSimpleSelector(selector)
+      const {
+        childNodes,
+        tagName
+      } = element
+      console.log(element)
+      if (selectorType === 1) {
+        //id选择器
+        if (tagName && element.attributes.id) {
+          const idVal = `#${element.attributes.id.value}`
+          if (idVal === selector) {
+            return true
+          }
+        }
+      }
+      if (selectorType === 2) {
+        //tag选择器
+        if (tagName && tagName.toLowerCase() === selector) {
+          return true
+        }
+      }
+      if (selectorType === 3) {
+        //class选择器
+        if (tagName && element.attributes.class) {
+          const classVal = `.${element.attributes.class.value}`
+          if (classVal === selector) {
+            return true
+          }
+        }
+      }
+      if (selectorType === 4) {
+        //属性选择器
+        if (tagName && element.attributes) {
+          const attrs = selector.replace("[", "").replace("]", "").split("=")
+          const attrName = attrs[0]
+          if (attrs.length === 1) {
+            //[attribute]
+            if (element.attributes[attrName]) {
+              return true
+            }
+          } else {
+            const attrVal = attrs[1]
+            const attrKeys = Object.keys(element.attributes)
+            if (attrName.split("")[attrName.length - 1] === "~") {
+              //[attribute~=value]
+              for (let i = 0; i < attrKeys.length; i++) {
+                if (element.attributes[i].value.includes(attrVal)) {
+                  return true
+                }
+              }
+            }
+            if (attrName.split("")[attrName.length - 1] === "^") {
+              //[attribute^=value]
+              for (let i = 0; i < attrKeys.length; i++) {
+                if (element.attributes[i].value.startsWith(attrVal)) {
+                  return true
+                }
+              }
+            }
+            if (attrName.split("")[attrName.length - 1] === "|") {
+              //[attribute|=value]
+              for (let i = 0; i < attrKeys.length; i++) {
+                if (element.attributes[i].value.startsWith(attrVal)) {
+                  return true
+                }
+              }
+            }
+            if (attrName.split("")[attrName.length - 1] === "$") {
+              //[attribute$=value]
+              for (let i = 0; i < attrKeys.length; i++) {
+                if (element.attributes[i].value.endsWith(attrVal)) {
+                  return true
+                }
+              }
+            }
+            if (attrName.split("")[attrName.length - 1] === "*") {
+              //[attribute*=value]
+              for (let i = 0; i < attrKeys.length; i++) {
+                if (element.attributes[i].value.includes(attrVal)) {
+                  return true
+                }
+              }
+            }
+            if (!["~", "^", "|", "$", "*"].includes(attrName.split("")[attrName.length - 1])) {
+              //[attribute=value]
+              for (let i = 0; i < attrKeys.length; i++) {
+                if (element.attributes[i].value === attrVal) {
+                  return true
+                }
+              }
+            }
+          }
+        }
+      }
+      return false
+    }
+
+    function match(selector, match) {
+
+    }
+    const element = document.getElementsByClassName("classa")
+    // console.log(element[0])
+    const selector = "#container .clsa>.classa>span"
+    // const selector = ".classa"
+    // const res = simpleMatch(selector, element[0])
+    const res = complexMatch(selector, element[0])
+    console.log(res)
+  </script>
+</body>
+
+</html>
