@@ -79,7 +79,7 @@ align-content
 
 ###### 3.1、flex-direction属性
 
-决定属性轴的方向（即项目排列的方向）。
+决定属性轴的方向（即项目排列的方向）。  
 `.box {
   flex-direction: row | row-reverse | column | column-reverse;
 }`  
@@ -91,7 +91,7 @@ column-reverse：主轴为垂直方向，起点在下沿。
 
 ###### 3.2、flex-wrap属性
 
-默认情况下，项目都排在一条线（又称"轴线"）上。flex-wrap属性定义，如果一条轴线排不下，如何换行。  
+默认情况下，项目都排在一条线（又称"轴线"）上。flex-wrap属性定义，如果一条轴线排不下，如何换行。    
 
 `.box{
   flex-wrap: nowrap | wrap | wrap-reverse;
@@ -103,7 +103,7 @@ wrap-reverse：换行，第一行在下方。
 
 ###### 3.3、flex-flow
 
-flex-flow属性是flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap。
+flex-flow属性是flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap。  
 `.box {
   flex-flow: <flex-direction> || <flex-wrap>;
 }`
@@ -138,7 +138,7 @@ stretch（默认值）：如果项目未设置高度或设为auto，将占满整
 
 ###### 3.6、align-content属性
 
-align-content属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。
+align-content属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。  
 
 `.box {
   align-content: flex-start | flex-end | center | space-between | space-around | stretch;
@@ -162,7 +162,7 @@ align-self
 
 ###### 4.1、order属性
 
-order属性定义项目的排列顺序。数值越小，排列越靠前，默认为0。
+order属性定义项目的排列顺序。数值越小，排列越靠前，默认为0。  
 `.item {
   order: <integer>;
 }`
@@ -170,7 +170,7 @@ order属性定义项目的排列顺序。数值越小，排列越靠前，默认
 ###### 4.2 flex-grow属性
 
 flex-grow属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。  
-如果所有项目的flex-grow属性都为1，则它们将等分剩余空间（如果有的话）。如果一个项目的flex-grow属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。  
+如果所有项目的flex-grow属性都为1，则它们将等分剩余空间（如果有的话）。如果一个项目的flex-grow属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。   
 
 `.item {
   flex-grow: <number>; /* default 0 */
@@ -179,7 +179,7 @@ flex-grow属性定义项目的放大比例，默认为0，即如果存在剩余�
 ###### 4.3、flex-shrink属性
 
 flex-shrink属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。  
-如果所有项目的flex-shrink属性都为1，当空间不足时，都将等比例缩小。如果一个项目的flex-shrink属性为0，其他项目都为1，则空间不足时，前者不缩小。  
+如果所有项目的flex-shrink属性都为1，当空间不足时，都将等比例缩小。如果一个项目的flex-shrink属性为0，其他项目都为1，则空间不足时，前者不缩小。   
 
 `.item {
   flex-shrink: <number>; /* default 1 */
@@ -188,7 +188,7 @@ flex-shrink属性定义了项目的缩小比例，默认为1，即如果空间�
 ###### 4.4 flex-basis属性
 
 flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。  
-它可以设为跟width或height属性一样的值（比如350px），则项目将占据固定空间。  
+它可以设为跟width或height属性一样的值（比如350px），则项目将占据固定空间。    
 
 `.item {
   flex-basis: <length> | auto; /* default auto */
@@ -206,7 +206,7 @@ flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 au
 
 ###### 4.6 align-self属性
 
-align-self属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。
+align-self属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。  
 
 `.item {
   align-self: auto | flex-start | flex-end | center | baseline | stretch;
