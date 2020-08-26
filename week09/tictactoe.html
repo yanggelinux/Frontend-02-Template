@@ -36,7 +36,7 @@
           let cell = document.createElement("div")
           cell.classList.add("cell")
           cell.innerText = pattern[i][j] === 2 ? "❌" : pattern[i][j] === 1 ? "⭕️" : ""
-          cell.addEventListener("click", () => move(j, i))
+          cell.addEventListener("click", () => move(i, j))
           board.appendChild(cell)
 
         }
@@ -44,10 +44,93 @@
       }
     }
 
+
+
     function move(x, y) {
-      pattern[y][x] = color
+      pattern[x][y] = color
+      //注意check的顺序必须放到这个位置
+      if (check(pattern, color)) {
+        alert(color === 2 ? "❌ is winner" : "⭕️ is winner")
+      }
       color = 3 - color
       show()
+      if (willWin(pattern, color)) {
+        console.log(color === 2 ? "❌ is winner" : "⭕️ is winner")
+      }
+    }
+
+
+    function check(pattern, color) {
+      //判断横着一排 颜色是否一样
+      for (let i = 0; i < 3; i++) {
+        let win = true
+        for (let j = 0; j < 3; j++) {
+          if (pattern[i][j] !== color) {
+            win = false
+          }
+        }
+        if (win) {
+          return true
+        }
+      }
+      //判断竖着一排 颜色是否一样
+      for (let i = 0; i < 3; i++) {
+        let win = true
+        for (let j = 0; j < 3; j++) {
+          if (pattern[j][i] !== color) {
+            win = false
+          }
+        }
+        if (win) {
+          return true
+        }
+      } {
+        //判断从上到下斜着一排 颜色是否一样
+        let win = true
+        for (let i = 0; i < 3; i++) {
+          if (pattern[i][i] !== color) {
+            win = false
+          }
+        }
+        if (win) {
+          return true
+        }
+      }
+
+      {
+        //判断从下到上斜着一排颜色是否一样
+        let win = true
+        for (let j = 2; j >= 0; j--) {
+          if (pattern[j][2 - j] !== color) {
+            win = false
+          }
+        }
+        if (win) {
+          return true
+        }
+      }
+      return false
+
+    }
+
+    function clone(pattern) {
+      return JSON.parse(JSON.stringify(pattern))
+    }
+
+    function willWin(pattern, color) {
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+          if (pattern[i][j]) {
+            continue
+          }
+          tmp = clone(pattern)
+          tmp[i][j] = color
+          if (check(tmp, color)) {
+            return true
+          }
+        }
+      }
+      return false
     }
 
     show()
