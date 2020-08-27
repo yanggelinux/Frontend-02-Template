@@ -1,0 +1,38 @@
+<html>
+
+<head>
+  <title>红绿灯</title>
+  <style>
+    #light {
+      height: 100px;
+      width: 100px;
+      border-radius: 50px;
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="light"></div>
+  <script>
+    const light = document.getElementById("light")
+
+    function changeColor(time, color) {
+      return new Promise((reslove, reject) => {
+
+        light.style.backgroundColor = color
+        setTimeout(reslove, time)
+      })
+    }
+    async function colorLight() {
+      while (true) {
+        await changeColor(3000, "red")
+        await changeColor(3000, "green")
+        await changeColor(3000, "yellow")
+      }
+    }
+    colorLight()
+  </script>
+</body>
+
+</html>
