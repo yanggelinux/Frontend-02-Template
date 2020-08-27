@@ -66,7 +66,8 @@
     function computerMove() {
       let choice = bestChoice(pattern, color)
       if (choice.point) {
-        pattern[choice.point[1]][choice.point[0]] = color
+        //pattern[i][j] = color
+        pattern[choice.point[0]][choice.point[1]] = color
       }
       if (check(pattern, color)) {
         alert(color === 2 ? "❌ is winner" : "⭕️ is winner")
@@ -141,7 +142,7 @@
           tmp = clone(pattern)
           tmp[i][j] = color
           if (check(tmp, color)) {
-            return [j, i]
+            return [i, j]
           }
         }
       }
@@ -169,7 +170,7 @@
           let opt = bestChoice(tmp, 3 - color)
           if (-opt.result > result) {
             result = -opt.result
-            point = [j, i]
+            point = [i, j]
           }
           if (result === 1) {
             break outer
