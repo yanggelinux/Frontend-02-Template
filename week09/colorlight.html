@@ -3,32 +3,46 @@
 <head>
   <title>红绿灯</title>
   <style>
-    #light {
+    .light-wrapper {
+      height: 150px;
+      width: 350px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .light {
       height: 100px;
       width: 100px;
       border-radius: 50px;
-      background-color: red;
+      background-color: grey;
     }
   </style>
 </head>
 
 <body>
-  <div id="light"></div>
+  <div class="light-wrapper">
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+  </div>
+
   <script>
-    const light = document.getElementById("light")
-
-    function changeColor(time, color) {
+    function changeColor(time, color, index) {
       return new Promise((reslove, reject) => {
-
-        light.style.backgroundColor = color
+        const lightElements = document.getElementsByClassName("light")
+        lightElements[index].style.backgroundColor = color
         setTimeout(reslove, time)
       })
     }
     async function colorLight() {
       while (true) {
-        await changeColor(3000, "red")
-        await changeColor(3000, "green")
-        await changeColor(3000, "yellow")
+        await changeColor(1000, "red", 0)
+        await changeColor(0, "grey", 0)
+        await changeColor(2000, "green", 1)
+        await changeColor(0, "grey", 1)
+        await changeColor(3000, "yellow", 2)
+        await changeColor(0, "grey", 2)
       }
     }
     colorLight()
