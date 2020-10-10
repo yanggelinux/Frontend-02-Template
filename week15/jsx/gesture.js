@@ -93,6 +93,10 @@ export class Recognizer {
   start(point, context) {
     context.startX = point.clientX
     context.startY = point.clientY
+    this.dispatcher.dispatch("press", {
+      clientX: point.clientX,
+      clientY: point.clientY,
+    })
     context.points = [
       {
         t: Date.now(),
@@ -202,6 +206,14 @@ export class Recognizer {
         isFlick: context.isFlick,
       })
     }
+    this.dispatcher.dispatch("end", {
+      startX: context.startX,
+      startY: context.startY,
+      clientX: point.clientX,
+      clientY: point.clientY,
+      isVertical: context.isVertical,
+      isFlick: context.isFlick,
+    })
 
     // console.log("env", point.clientX, point.clientY)
   }
