@@ -39,7 +39,7 @@ export class Carousel extends Component {
         ax = 0
       }
     })
-    this.root.addEventListener("tip", (event) => {
+    this.root.addEventListener("tap", (event) => {
       this.triggerEvent("click", {
         data: this[ATTRIBUTE].src[this[STATE].position],
         position: this[STATE].position,
