@@ -1,4 +1,5 @@
 let http = require("http")
+let https = require("https")
 let fs = require("fs")
 let unzipper = require("unzipper")
 let querystring = require("querystring")
@@ -7,6 +8,7 @@ let querystring = require("querystring")
 function auth(request, response) {
   let query = querystring.parse(request.url.match(/^\/auth\?([\s\S]+$)/)[1])
   getToken(query.code, function (info) {
+    console.log(info)
     response.write(
       `<a href="http://localhost:8083/?token=${info.access_token}">publish</a>`
     )
@@ -15,7 +17,7 @@ function auth(request, response) {
 }
 
 function getToken(code, callback) {
-  let request = http.request(
+  let request = https.request(
     {
       hostname: "github.com",
       path: `/login/oauth/access_token?code=${code}?client_id=Iv1.73f6a40000cece08?client_secret=57e0a846c1605e2aa4d2ecab1c1730a25442ced6`,
@@ -28,7 +30,6 @@ function getToken(code, callback) {
         body += chunk.toString()
       })
       response.on("end", (chunk) => {
-        console.log(body)
         callback(querystring.parse(body))
       })
     }
@@ -37,7 +38,7 @@ function getToken(code, callback) {
 }
 
 function getUser(token, callback) {
-  let request = http.request(
+  let request = https.request(
     {
       hostname: "api.github.com",
       path: `/user`,
@@ -77,6 +78,7 @@ function publish(request, response) {
 
 http
   .createServer(function (request, response) {
+    console.log("request.url", request.url)
     if (request.url.match(/^\/auth\?/)) {
       return auth(request, response)
     }
